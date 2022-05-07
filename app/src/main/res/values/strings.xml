@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Venty Video Player</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="media_url_mp4">https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4</string>
+
+    <string-array name="Videos_string_array">
+
+        <item>https://vid-hd.ve.vc/video_files/hd1080/15576/RULE OVER (Putt Jattan de)-The Landers (www.DjPunjab.Video).mp4</item>
+        <item>https://vid-hd.ve.vc/video_files/hd1080/15599/Wahzirinthehood-Wazir Patar (www.DjPunjab.Video).mp4</item>
+        <item>https://vid-hd.ve.vc/video_files/hd1080/15583/END-Amrit Maan (www.DjPunjab.Video).mp4</item>
+        <item>https://vid-hd.ve.vc/video_files/hd1080/15581/Koka-Jigar (www.DjPunjab.Video).mp4</item>
+        <item>https://vid-hd.ve.vc/video_files/hd1080/15577/Dil Gaunda Firda-Satinder Sartaaj (www.DjPunjab.Video).mp4</item>
+        <item>https://vid-hd.ve.vc/video_files/hd1080/15557/Tor-Tarsem Jassar (www.DjPunjab.Video).mp4</item>
+        <item>https://vid-hd.ve.vc/video_files/hd1080/15559/DEEWANA-Gurshabad (www.DjPunjab.Video).mp4</item>
+        <item>https://vid-hd.ve.vc/video_files/hd/15560/Pta Mainu-Harvi (www.DjPunjab.Video).mp4</item>
+        <item>https://vid-hd.ve.vc/video_files/hd/15554/Nain-Dilpreet Dhillon (www.DjPunjab.Video).mp4</item>
+        <item> https://vid-hd.ve.vc/video_files/hd/15555/Ford Baapu Da-Jordan Sandhu (www.DjPunjab.Video).mp4</item>
+        <item> https://vid-hd.ve.vc/video_files/hd/15551/Pent Straight-Gurnam Bhullar (www.DjPunjab.Video).mp4</item>
+        <item> https://vid-hd.ve.vc/video_files/hd/15553/Elevated-Shubh (www.DjPunjab.Video).mp4</item>
+        <item> https://vid-hd.ve.vc/video_files/hd/15550/Taur Jattan Di-Dilpreet Dhillon (www.DjPunjab.Video).mp4</item>
+        <item> https://vid-hd.ve.vc/video_files/hd/15545/Mera Yaar-Gurnam Bhullar (www.DjPunjab.Video).mp4</item>
+        <item> https://vid-hd.ve.vc/video_files/hd/15543/Yaar Razi-Tarsem Jassar (www.DjPunjab.Video).mp4</item>
+        <item>  https://vid-hd.ve.vc/video_files/hd/15541/Behja Behja-The Landers (www.DjPunjab.Video).mp4</item>
+        <item>  https://vid-hd.ve.vc/video_files/hd/15548/2 Number-Jass Bajwa (www.DjPunjab.Video).mp4</item>
+
+    </string-array>
+
+
+</resources>

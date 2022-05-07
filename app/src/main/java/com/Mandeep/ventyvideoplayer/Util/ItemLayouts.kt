@@ -1,0 +1,8 @@
+package com.Mandeep.ventyvideoplayer.Util
+
+//ENUM CLASS FOR ADPATER CLASS TO MAKE CHOICE BETWEEN ALLVIDEOS AND BUCKET LISTB ITEM LAYOUTS
+enum class ItemLayouts
+{
+    VIDEO_ITEM_LAYOUT,
+    BUCKET_ITEM_LAYOUT
+}

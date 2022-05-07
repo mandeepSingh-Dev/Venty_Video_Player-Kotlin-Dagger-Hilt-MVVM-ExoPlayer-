@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.Mandeep.ventyvideoplayer.Fragment.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" >
+        <action
+            android:id="@+id/action_videoFragment_to_playerFragment"
+            app:destination="@id/playerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerFragment"
+        android:name="com.Mandeep.ventyvideoplayer.Fragment.PlayerFragment"
+        android:label="fragment_player"
+        tools:layout="@layout/fragment_player" />
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.Mandeep.ventyvideoplayer.Fragment.ViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager" >
+        <action
+            android:id="@+id/action_viewPagerFragment_to_videoFragment"
+            app:destination="@id/videoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.Mandeep.ventyvideoplayer.Fragment.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bucketVideosFragment"
+        android:name="com.Mandeep.ventyvideoplayer.Fragment.BucketVideosFragment"
+        android:label="fragment_bucket_videos"
+        tools:layout="@layout/fragment_bucket_videos" />
+</navigation>
