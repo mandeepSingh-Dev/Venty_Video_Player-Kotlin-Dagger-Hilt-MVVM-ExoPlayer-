@@ -6,16 +6,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.Mandeep.ventyvideoplayer.MVVM.MediaClasss
-import com.Mandeep.ventyvideoplayer.MVVM.MyAdapter
+import com.Mandeep.ventyvideoplayer.MVVM.*
 import com.Mandeep.ventyvideoplayer.Util.ItemLayouts
 import com.Mandeep.ventyvideoplayer.databinding.FragmentBucketVideosBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class BucketVideosFragment : Fragment() {
 
     lateinit var binding: FragmentBucketVideosBinding
+
+    @Inject
+    lateinit var assistedFactory:MyViewModelAssistedFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +31,7 @@ class BucketVideosFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentBucketVideosBinding.inflate(LayoutInflater.from(requireContext()))
         return binding.root
@@ -34,12 +40,19 @@ class BucketVideosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            val bucketVideoList:ArrayList<MediaClasss> = arguments?.getParcelableArrayList("BucketVideosList")!!
-            Log.d("dfuue44gfy33",bucketVideoList.size.toString())
+           val bucketname = arguments?.getString("BUCKET_NAME")
+           // val bucketVideoList:ArrayList<MediaClasss> = arguments?.getParcelableArrayList("BucketVideosList")!!
+          //  Log.d("dfuue44gfy33",bucketVideoList.size.toString())
 
-          val adapter = MyAdapter(requireContext(),bucketVideoList, ItemLayouts.VIDEO_ITEM_LAYOUT)
-            binding.bucketVideoRectyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.bucketVideoRectyclerView.adapter = adapter
+            Log.d("37rf3tyf",bucketname+"skods")
+            val myViewmodel : MyViewmodel by viewModels {
+                MyViewModelFactory(assistedFactory,bucketname!!)
+            }
+            myViewmodel.getFolderVideos().observe(viewLifecycleOwner, Observer {
+                val adapter = MyAdapter(requireContext(),it, ItemLayouts.VIDEO_ITEM_LAYOUT)
+                binding.bucketVideoRectyclerView.layoutManager = LinearLayoutManager(requireContext())
+                binding.bucketVideoRectyclerView.adapter = adapter
+            })
 
         }
     }

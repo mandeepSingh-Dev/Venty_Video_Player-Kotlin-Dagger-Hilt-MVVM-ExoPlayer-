@@ -3,31 +3,27 @@ package com.Mandeep.ventyvideoplayer.Util
 import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
-import android.media.MediaDataSource
-import android.media.MediaMetadataRetriever
-import android.net.Uri
-import android.os.Build
-import android.provider.DocumentsContract
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.provider.MediaStore
 import android.util.Log
-import android.util.Size
+import androidx.core.graphics.BitmapCompat
 import com.Mandeep.ventyvideoplayer.MVVM.MediaClasss
-import com.google.android.exoplayer2.MetadataRetriever
-import java.io.File
-import java.io.FileDescriptor
-import java.io.FileInputStream
-import java.io.OutputStream
-import java.nio.file.Path
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.BitmapEncoder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
-import kotlin.io.path.Path
-import kotlin.io.path.name
 
 class FetchVideos @Inject constructor() {
 
 
     lateinit var arrayList:ArrayList<MediaClasss>
     @SuppressLint("Range", "Recycle")
-    fun fetchAllVideos(context: Context):ArrayList<MediaClasss>{
+   suspend fun fetchAllVideos(context: Context):ArrayList<MediaClasss> = withContext(Dispatchers.IO){
         arrayList = ArrayList()
         val uri = MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
         val cursor = context.contentResolver.query(uri,null,null,null,null);
@@ -51,10 +47,26 @@ class FetchVideos @Inject constructor() {
 
 
                 val appendedUri = ContentUris.withAppendedId(uri,id.toLong())
-                arrayList.add(MediaClasss(title,artist,bucket,relativePath,appendedUri.toString()))
+
+                try {
+                    var bitmap: Bitmap? = null
+                    var futureTarget = Glide.with(context).asBitmap().load(appendedUri).submit(100, 100)
+                    bitmap = futureTarget.get()
+
+                    val baos = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,40,baos)
+                    val byteArray = baos.toByteArray()
+
+                    arrayList.add(MediaClasss(artist, title, bucket, relativePath, appendedUri.toString(), byteArray))
+
+                }catch (e:Exception){
+                    arrayList.add(MediaClasss(artist, title, bucket, relativePath, appendedUri.toString()))
+                }
+              //  arrayList.add(MediaClasss(artist,title,bucket,relativePath,appendedUri.toString()))
+
             }
         }
-        return  arrayList
+        return@withContext arrayList
     }
 
     fun gettingFolderFromArayList(arrayList: ArrayList<MediaClasss>):ArrayList<MediaClasss>{
@@ -97,7 +109,23 @@ class FetchVideos @Inject constructor() {
                     val id =    cursor.getString(IdColumn)
 
                     val appendedUri = ContentUris.withAppendedId(uri,id.toLong())
-                    buckVideoList.add(MediaClasss(title,artist,bucket,relativePath,appendedUri.toString()))
+
+                    try {
+                        var bitmap: Bitmap? = null
+                        var futureTarget = Glide.with(context).asBitmap().load(appendedUri).submit(100, 100)
+                        bitmap = futureTarget.get()
+
+                        val baos = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,40,baos)
+                        val byteArray = baos.toByteArray()
+
+                        buckVideoList.add(MediaClasss(artist, title, bucket, relativePath, appendedUri.toString(), byteArray))
+
+                    }catch (e:Exception){
+                        buckVideoList.add(MediaClasss(artist, title, bucket, relativePath, appendedUri.toString()))
+                    }
+
+                   // buckVideoList.add(MediaClasss(title,artist,bucket,relativePath,appendedUri.toString()))
                 }
             }
         return buckVideoList

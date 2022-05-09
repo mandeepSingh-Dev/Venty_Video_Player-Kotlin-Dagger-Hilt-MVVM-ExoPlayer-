@@ -149,8 +149,8 @@ class ViewPagerFragment : Fragment() {
         }
         if(!arrayList?.isEmpty()!!)
         {
-            val intent = Intent("SENDING_LIST").putParcelableArrayListExtra("ArrayLIST",arrayList)
-            LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+         //   val intent = Intent("SENDING_LIST").putParcelableArrayListExtra("ArrayLIST",arrayList)
+         //   LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
 
             /* val adapter = MyAdapter(requireContext(),arrayList!!)
              binding?.AllVideoRectyclerView?.layoutManager = LinearLayoutManager(requireContext())

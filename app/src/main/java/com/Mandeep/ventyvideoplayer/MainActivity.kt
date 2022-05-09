@@ -1,24 +1,30 @@
 package com.Mandeep.ventyvideoplayer
 
 import android.annotation.SuppressLint
+import android.app.PictureInPictureParams
 import android.content.ContentUris
-import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.util.Rational
+import android.view.Display
 import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.Mandeep.ventyvideoplayer.Fragment.AllVideosFragment
 import com.Mandeep.ventyvideoplayer.Fragment.VideoFoldersFragment
 import com.Mandeep.ventyvideoplayer.MVVM.MediaClasss
+import com.Mandeep.ventyvideoplayer.MVVM.VideosRepositry
 import com.Mandeep.ventyvideoplayer.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -34,11 +40,36 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var videoFoldersFragment:VideoFoldersFragment
 
+    @Inject
+    lateinit var videosRepositry: VideosRepositry
+  /*  val myviewmodelFactory:MyViewModelFactory by lazy {
+        MyViewModelFactory(videosRepositry)
+    }*/
+   /* val myViewmodel:MyViewmodel by lazy{
+        ViewModelProvider(this).get(MyViewmodel::class.java)
+    }*/
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         supportActionBar?.hide()
+
+
+        binding.button.setOnClickListener {
+            val d: Display = windowManager.defaultDisplay
+
+            val p = Point()
+            d.getSize(p)
+            val width: Int = p.x
+            val height: Int = p.y
+
+            val ratio = Rational(width, height)
+            val pip = PictureInPictureParams.Builder().setAspectRatio(ratio).build()
+
+            enterPictureInPictureMode(pip)
+        }
 
         arrayList = ArrayList()
     }

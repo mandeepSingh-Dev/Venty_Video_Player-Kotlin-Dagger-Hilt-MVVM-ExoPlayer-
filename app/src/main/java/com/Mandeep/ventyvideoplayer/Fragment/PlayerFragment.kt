@@ -48,7 +48,7 @@ class PlayerFragment @Inject constructor() : Fragment() {
         if(arguments!=null)
         {
             arguments?.let {
-               arrayList =  it.getParcelableArrayList("VIDEOLIST")
+              // arrayList =  it.getParcelableArrayList("VIDEOLIST")
                 currentItem = it.getInt("POSITION")
               //  link = it.getString("LINK")
             }
@@ -140,10 +140,7 @@ class PlayerFragment @Inject constructor() : Fragment() {
         player = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Toast.makeText(requireContext(),"onDestory", Toast.LENGTH_SHORT).show()
-    }
+
 
 
 

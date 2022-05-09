@@ -9,9 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.Mandeep.ventyvideoplayer.MVVM.MediaClasss
-import com.Mandeep.ventyvideoplayer.MVVM.MyAdapter
+import com.Mandeep.ventyvideoplayer.MVVM.*
 import com.Mandeep.ventyvideoplayer.Util.FetchVideos
 import com.Mandeep.ventyvideoplayer.Util.ItemLayouts
 import com.Mandeep.ventyvideoplayer.databinding.FragmentVideoFoldersBinding
@@ -29,6 +32,9 @@ class VideoFoldersFragment  @Inject constructor(): Fragment()  {
 
     @Inject
     lateinit var  fetchVideos: FetchVideos
+
+    @Inject
+    lateinit var assistedFactory:MyViewModelAssistedFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +57,28 @@ class VideoFoldersFragment  @Inject constructor(): Fragment()  {
 
     override fun onResume() {
         super.onResume()
-        fetchVideos.fetchAllVideos(requireContext())
+       // fetchVideos.fetchAllVideos(requireContext())
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             if (!isShow) {
-                arrayList = fetchVideos.fetchAllVideos(requireContext())
+
+                val myViewmodel:MyViewmodel by viewModels {
+                    MyViewModelFactory(assistedFactory,"null")
+                }
+                myViewmodel.getBucketsList().observe(viewLifecycleOwner,Observer{
+
+                    val adapter = MyAdapter(requireContext(),it,ItemLayouts.BUCKET_ITEM_LAYOUT)
+                    binding.bucketRectyclerView2.layoutManager = GridLayoutManager(requireContext(),2)
+                    binding.bucketRectyclerView2.adapter = adapter
+
+                })
+              /*  arrayList = fetchVideos.fetchAllVideos(requireContext())
                bucketList = fetchVideos.gettingFolderFromArayList(arrayList!!)
                 if(!arrayList?.isEmpty()!!)
                 {
                     val adapter = MyAdapter(requireContext(),bucketList,ItemLayouts.BUCKET_ITEM_LAYOUT)
                     binding.bucketRectyclerView2.layoutManager = LinearLayoutManager(requireContext())
                     binding.bucketRectyclerView2.adapter = adapter
-                }
+                }*/
                 isShow = true
             }
         }

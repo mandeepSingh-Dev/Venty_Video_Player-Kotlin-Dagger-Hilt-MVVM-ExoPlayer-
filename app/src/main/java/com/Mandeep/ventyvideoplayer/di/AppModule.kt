@@ -13,10 +13,10 @@ import javax.inject.Scope
 @InstallIn(SingletonComponent::class)
  class AppModule {
 
-   /*lateinit var context:Context
+   lateinit var context:Context
    @Provides
     fun provideContext(@ApplicationContext context:Context):Context{
         this.context = context
       return context
-    }*/
+    }
 }
