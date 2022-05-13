@@ -60,11 +60,12 @@ class MyAdapter(val context: Context, var videoList: ArrayList<MediaClasss>?, pr
                     //bundle.putString("LINK",mediaClasss?.link)
                   //  bundle.putSerializable("VLIST",videoList)
                     bundle.putSerializable("VIDEOLIST",videoList)
-                    bundle.putInt("POSITION",position)
+
 
                    //Navigation.findNavController(it).navigate(R.id.playerFragment,bundle)
 
                     val intent1 = Intent(context,PlayerActivity::class.java)
+                        intent1.putExtra("POSITION",position)
                     intent1.putExtra("bundle",bundle)
                     context.startActivity(intent1)
                 }
